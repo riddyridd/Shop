@@ -1,21 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import './App.css';
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
+import Navbar from "./Message.js/Navbar" 
+import ProductsContextProvider from "./Global/ProductsContext"
+import CartContextProvider from './Global/CartContext';
+import Products from "./Message.js/Products"
+import Cart from "./Message.js/Cart"
+import NotFound from "./Message.js/NotFound"
 
-export default function App() {
+function App() {
   return (
-    <View style={styles.container}>
-      <Text>Ridwan's Shopper!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <div>
+      <ProductsContextProvider>
+      <CartContextProvider>
+      <Router>
+      <Navbar />
+        <Switch>
+          <Route path="/" exact component={Products} />
+          <Route path="/cart" exact component={Cart}/>
+          <Route component={NotFound} />
+        </Switch>
+      </Router>
+      <CartContextProvider>
+      </ProductsContextProvider>
+    </div>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
